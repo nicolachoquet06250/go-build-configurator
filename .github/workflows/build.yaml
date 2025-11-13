@@ -33,5 +33,5 @@ jobs:
       - name: Upload binary artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${output_name}-${{ matrix.goos }}-${{ matrix.goarch }}
+          name: go-build-configurator-${{ matrix.goos }}-${{ matrix.goarch }}
           path: bin/
