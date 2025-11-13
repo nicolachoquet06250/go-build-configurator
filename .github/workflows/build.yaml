@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  build_amd:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,7 +20,35 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.21'  # spécifiez ici la version de Go
+          go-version: '1.25'  # spécifiez ici la version de Go
+
+      - name: Build binary
+        run: |
+          output_name=go-build-configurator
+          if [ "${{ matrix.goos }}" = "windows" ]; then
+            output_name="${output_name}.exe"
+          fi
+          env GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o bin/${output_name} .
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-build-configurator-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: bin/
+  build_arm:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [darwin]
+        goarch: [arm64]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.25'  # spécifiez ici la version de Go
 
       - name: Build binary
         run: |
