@@ -24,7 +24,7 @@ jobs:
 
       - name: Build binary
         run: |
-          output_name=myapp
+          output_name=go-build-configurator
           if [ "${{ matrix.goos }}" = "windows" ]; then
             output_name="${output_name}.exe"
           fi
@@ -33,5 +33,5 @@ jobs:
       - name: Upload binary artifact
         uses: actions/upload-artifact@v4
         with:
-          name: myapp-${{ matrix.goos }}-${{ matrix.goarch }}
+          name: ${{ output_name }}-${{ matrix.goos }}-${{ matrix.goarch }}
           path: bin/
