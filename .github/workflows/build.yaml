@@ -28,7 +28,7 @@ jobs:
           if [ "${{ matrix.goos }}" = "windows" ]; then
             output_name="${output_name}.exe"
           fi
-          env GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o bin/${output_name} ./cmd/myapp
+          env GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o bin/${output_name} .
 
       - name: Upload binary artifact
         uses: actions/upload-artifact@v4
